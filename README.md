@@ -6,7 +6,7 @@ Discord bot to start and stop our family Minecraft server hosted on an AWS EC2 i
 2. When the last member leaves the trigger-voice-channel and the trigger-voice-channel is now empty, the bot stops the EC2 instance.
 3. The bot provides information on the verbose-channel
 
-![Phase1 Diagram](media\Phase1-diagram.PNG "Phase1 Diagram")
+![Phase1 Diagram](media/Phase1-diagram.PNG "Phase1 Diagram")
 
 
 
