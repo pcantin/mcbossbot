@@ -1,11 +1,8 @@
-# bot.py
 import os
 import discord
 from dotenv import load_dotenv
 import requests
 from datetime import datetime
-import json
-import urllib3
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -21,10 +18,7 @@ async def on_voice_state_update(member, before, after):
     if after.channel.id == int(os.getenv('VOICE_TRIGGER_CHANNEL')):
       await chnl.send('Preparing to start MC server...')
 
-      http = urllib3.PoolManager()
-      response = http.request('GET','https://api.mcstatus.io/v2/status/java/{svrip}'.format(svrip=os.getenv('SERVER_IP')))
-      data = response.data
-      jsonData = json.loads(data)
+      jsonData = requests.get('https://api.mcstatus.io/v2/status/java/{svrip}'.format(svrip=os.getenv('SERVER_IP'))).json()
 
       if not jsonData["online"]:
         response = requests.post('{gatewayapi}/startminecraftserver'.format(gatewayapi=os.getenv('AWS_API_GATEWAY_URL')))
@@ -49,10 +43,7 @@ async def on_voice_state_update(member, before, after):
 
       #Close server if voice channel is empty
       if not memberInChannel:
-        http = urllib3.PoolManager()
-        response = http.request('GET','https://api.mcstatus.io/v2/status/java/{svrip}'.format(svrip=os.getenv('SERVER_IP')))
-        data = response.data
-        jsonData = json.loads(data)
+        jsonData = requests.get('https://api.mcstatus.io/v2/status/java/{svrip}'.format(svrip=os.getenv('SERVER_IP'))).json()
 
         if not jsonData["online"]:
           await chnl.send('MC server is already unavailable.')
