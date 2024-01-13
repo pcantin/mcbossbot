@@ -1,0 +1,2 @@
+#!/bin/sh
+python3 /home/cantin01/dev/mcbossbot/bossbot.py
